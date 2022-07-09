@@ -1,13 +1,20 @@
 import React, {useState} from 'react';
 import BasketItem from './BasketItem';
 
-const Checkout = ({basket}) => {
+const Checkout = ({basket, checkoutTotal}) => {
 
     const [order, setOrder] = useState([])
 
+    const CheckoutNodes = basket.map((product, index) => {
+        return <BasketItem key={index} index={index} name={product.name} price={product.price}/>
+    });
+
     return(
-        <>
-            <BasketItem/> 
+        
+        <> 
+            <h1>Products added:</h1>
+            {CheckoutNodes}
+            <p>Total: {checkoutTotal}</p>
             <form>
                 <label htmlFor='customer-name'> Customer name:</label>
                 <input id='customer-name' type='text' placeholder='Name'/>
