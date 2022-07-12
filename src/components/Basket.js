@@ -1,33 +1,13 @@
-import React, {useState} from "react";
+import React from "react";
 import BasketItem from './BasketItem';
 import DiscountForm from "./DiscountForm";
 import {Link} from 'react-router-dom';
 
-const Basket = ({basket, removeProductFromBasket, setCheckoutTotal}) => {
-
-    const [discount, setDiscount] = useState();
+const Basket = ({basket, removeProductFromBasket, basketTotal, addDiscount, onDiscountSubmit}) => {
 
     const BasketNodes = basket.map((product, index) => {
         return <BasketItem key={index} index={index} name={product.name} price={product.price} stock={product.stock} image={product.image}removeProductFromBasket={removeProductFromBasket}/>
     });
-
-    const basketTotal = basket.reduce((runningTotal, product) => {
-        const currentTotal =  runningTotal + product.price
-        setCheckoutTotal(currentTotal)
-        return currentTotal;
-    }, 0);
-
-    const discountApplied = () => {
-        if (discount === 'happy10') {
-            return (basketTotal * 0.9)
-        } else {
-            return basketTotal;
-        };
-    };
-
-    const addDiscount = (submittedDiscount) => {
-        setDiscount(submittedDiscount)
-    };
 
 
     return(
@@ -38,8 +18,8 @@ const Basket = ({basket, removeProductFromBasket, setCheckoutTotal}) => {
             </ul>
             <p>Basket total: £{basketTotal}</p>
             <br></br>
-            <DiscountForm onDiscountSubmit={(code) => addDiscount(code)}/>
-            <p>Basket total after discount: £{discountApplied()}</p>
+            <DiscountForm onDiscountSubmit={(submittedDiscount) => addDiscount(submittedDiscount)}/>
+            <p>Basket total after discount: £{onDiscountSubmit()}</p>
             <br></br>
             {basket.length > 0 ?
                 <button>

@@ -15,11 +15,13 @@ const DiscountForm = ({onDiscountSubmit}) => {
             return;
         };
         onDiscountSubmit(discountToSubmit);
+        setDiscountCode('');
     };
 
     return (
         <form onSubmit={handleDiscountSubmit}>
-            <input type="text" placeholder="Add discount here" value={discountCode} onChange={handleCodeChange} />
+            <label id='discount-code' htmlFor='discount-code'>Discount code? </label>
+            <input name='discount-code' type="text" placeholder="Add discount here" value={discountCode} onChange={handleCodeChange} />
             <input type="submit" value="Apply Discount" />
         </form>
     );
